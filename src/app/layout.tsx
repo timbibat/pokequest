@@ -70,13 +70,7 @@ export const metadata: Metadata = {
     images: ["/og-image.png"],
     creator: "@timbibat",
   },
-  icons: {
-    icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/icon.svg", type: "image/svg+xml" },
-    ],
-    apple: "/apple-icon.png",
-  },
+
   manifest: "/manifest.json",
   other: {
     "theme-color": "#0f172a",
