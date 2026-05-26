@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: "https://pokequest-explorer.vercel.app/sitemap.xml",
+    sitemap: "https://pokequest-self.vercel.app/sitemap.xml",
   };
 }

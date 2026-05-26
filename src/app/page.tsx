@@ -57,17 +57,20 @@ export default function Home() {
     localStorage.setItem("pokequest-team", JSON.stringify(newTeam));
   };
 
-  // Fetch G1 151 Pokémon
+  // Fetch the full Pokémon index
   useEffect(() => {
-    const fetchG1 = async () => {
+    const fetchPokemon = async () => {
       setLoading(true);
       try {
-        // Fetch index of first 151
-        const res = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
-        if (!res.ok) throw new Error("Failed to index generation 1");
+        const countRes = await fetch("https://pokeapi.co/api/v2/pokemon");
+        if (!countRes.ok) throw new Error("Failed to fetch Pokémon count");
+        const countData = await countRes.json();
+
+        const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${countData.count}`);
+        if (!res.ok) throw new Error("Failed to index Pokémon");
         const indexData = await res.json();
 
-        // Fetch details for all 151 in parallel
+        // Fetch details for the full index in parallel
         const detailPromises = indexData.results.map(async (p: { url: string }) => {
           const detailRes = await fetch(p.url);
           if (!detailRes.ok) return null;
@@ -92,7 +95,7 @@ export default function Home() {
       }
     };
 
-    fetchG1();
+    fetchPokemon();
   }, []);
 
   // Handle adding/removing to battle party
@@ -172,8 +175,8 @@ export default function Home() {
             "@type": "WebApplication",
             name: "PokéQuest Explorer",
             description:
-              "Explore all 151 Generation 1 Pokémon with an interactive Pokédex and team-builder. Search, filter, sort, and build synergistic battle parties.",
-            url: "https://pokequest-explorer.vercel.app",
+              "Explore Pokémon with an interactive Pokédex and team-builder. Search, filter, sort, and build synergistic battle parties.",
+            url: "https://pokequest-self.vercel.app",
             applicationCategory: "GameApplication",
             operatingSystem: "All",
             author: {
@@ -403,7 +406,7 @@ export default function Home() {
               <span className="text-4xl mb-4">🔍</span>
               <h3 className="text-xl font-bold text-slate-200">No Pokémon Found</h3>
               <p className="text-sm text-slate-400 mt-2 max-w-sm">
-                No Generation 1 Pokémon matches "{search}" {selectedType && `under type ${selectedType}`}. Try a different query!
+                No Pokémon matches &quot;{search}&quot; {selectedType && `under type ${selectedType}`}. Try a different query!
               </p>
             </div>
           )}
