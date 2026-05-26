@@ -201,7 +201,7 @@ export default function TeamBuilder({
                 <div
                   key={member.id}
                   onClick={() => onSelectPokemon(member.id)}
-                  className={`glass-panel border-white/15 relative flex flex-col items-center justify-between p-3.5 rounded-xl transition-all duration-200 hover:scale-105 hover:bg-slate-900/50 cursor-pointer glow-${member.types[0]}`}
+                  className={`glass-panel border-white/15 relative flex flex-col items-center justify-center gap-2 p-3.5 rounded-xl transition-all duration-200 hover:scale-105 hover:bg-slate-900/50 cursor-pointer min-h-[110px] glow-${member.types[0]}`}
                 >
                   {/* Remove Button */}
                   <button
@@ -209,24 +209,24 @@ export default function TeamBuilder({
                       e.stopPropagation();
                       onRemove(member.id);
                     }}
-                    className="absolute -top-1.5 -right-1.5 w-5 h-5 flex items-center justify-center rounded-full bg-slate-900/90 text-rose-400 hover:text-rose-200 border border-white/10 shadow-md cursor-pointer hover:bg-rose-500/20 transition-all duration-150"
+                    className="absolute -top-1.5 -right-1.5 w-5 h-5 flex items-center justify-center rounded-full bg-slate-900/90 text-rose-400 hover:text-rose-200 border border-white/10 shadow-md cursor-pointer hover:bg-rose-500/20 transition-all duration-150 z-10"
                   >
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
 
-                  {/* Artwork image */}
+                  {/* Artwork image - scaled up and centered */}
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="w-14 h-14 object-contain drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)]"
+                    className="w-18 h-18 sm:w-20 sm:h-20 object-contain drop-shadow-[0_4px_6px_rgba(0,0,0,0.5)] transform hover:scale-110 transition-transform duration-200"
                   />
 
                   {/* Info card */}
-                  <div className="text-center w-full mt-2">
-                    <span className="block text-[11px] font-bold text-slate-200 truncate capitalize">
+                  <div className="text-center w-full">
+                    <span className="block text-[11px] font-bold text-slate-100 truncate capitalize">
                       {member.name}
                     </span>
                     <span className="text-[8px] font-extrabold uppercase text-slate-400 tracking-wider">

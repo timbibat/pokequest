@@ -262,7 +262,7 @@ export default function Home() {
           </div>
 
           {/* Quick type pills clickable list */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 border-t border-white/5 pt-3.5 scrollbar-thin">
+          <div className="flex items-center gap-2 overflow-x-auto pb-3 border-t border-white/5 pt-3.5 custom-scrollbar">
             <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-500 whitespace-nowrap mr-2 select-none">
               Type Pills:
             </span>
