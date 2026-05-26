@@ -71,6 +71,9 @@ export const metadata: Metadata = {
     creator: "@timbibat",
   },
 
+  verification: {
+    google: "56gLGCBIzoJX5aMJh3flIzaE8EM-nBUjo_aSpDWG-7k",
+  },
   manifest: "/manifest.json",
   other: {
     "theme-color": "#0f172a",
