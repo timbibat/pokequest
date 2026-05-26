@@ -22,6 +22,14 @@ export default function Home() {
   const [team, setTeam] = useState<PokemonBrief[]>([]);
   const [selectedPokemonId, setSelectedPokemonId] = useState<number | null>(null);
   const [notification, setNotification] = useState<string | null>(null);
+  
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 20;
+
+  // Reset to page 1 on filter/search change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, selectedType, sortBy]);
 
   // Trigger brief alert notifications
   const showNotification = (message: string) => {
@@ -146,6 +154,12 @@ export default function Home() {
   };
 
   const processedList = getProcessedList();
+
+  const totalPages = Math.ceil(processedList.length / ITEMS_PER_PAGE);
+  const paginatedList = processedList.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-emerald-500/30 selection:text-emerald-400">
@@ -307,17 +321,55 @@ export default function Home() {
               ))}
             </div>
           ) : processedList.length > 0 ? (
-            /* Renders actual matching profiles */
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mb-24">
-              {processedList.map((pokemon) => (
-                <PokemonCard
-                  key={pokemon.id}
-                  pokemon={pokemon}
-                  onClick={() => setSelectedPokemonId(pokemon.id)}
-                  isInTeam={team.some((t) => t.id === pokemon.id)}
-                  onToggleTeam={() => handleToggleTeam(pokemon)}
-                />
-              ))}
+            /* Renders actual matching profiles with pagination */
+            <div className="flex flex-col gap-8 mb-28">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                {paginatedList.map((pokemon) => (
+                  <PokemonCard
+                    key={pokemon.id}
+                    pokemon={pokemon}
+                    onClick={() => setSelectedPokemonId(pokemon.id)}
+                    isInTeam={team.some((t) => t.id === pokemon.id)}
+                    onToggleTeam={() => handleToggleTeam(pokemon)}
+                  />
+                ))}
+              </div>
+
+              {/* Premium Pagination Toolbar */}
+              {totalPages > 1 && (
+                <div className="flex items-center justify-between gap-4 bg-slate-900/40 p-3 rounded-2xl border border-white/5 max-w-md mx-auto w-full shadow-inner">
+                  <button
+                    onClick={() => {
+                      setCurrentPage((prev) => Math.max(prev - 1, 1));
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                    disabled={currentPage === 1}
+                    className="px-3.5 py-2 rounded-xl text-xs font-extrabold uppercase tracking-wider bg-slate-800 text-slate-300 border border-slate-700/50 cursor-pointer disabled:opacity-20 disabled:cursor-not-allowed hover:bg-slate-700 hover:text-white transition-all"
+                  >
+                    Prev
+                  </button>
+
+                  <div className="flex items-center gap-1.5 select-none">
+                    <span className="text-[10px] font-mono uppercase font-bold tracking-widest text-slate-500">
+                      Page
+                    </span>
+                    <span className="text-xs font-black text-slate-200 bg-slate-900 px-3 py-1.5 rounded-lg border border-white/5">
+                      {currentPage} <span className="text-[10px] text-slate-500 font-normal">/ {totalPages}</span>
+                    </span>
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                    disabled={currentPage === totalPages}
+                    className="px-3.5 py-2 rounded-xl text-xs font-extrabold uppercase tracking-wider bg-slate-800 text-slate-300 border border-slate-700/50 cursor-pointer disabled:opacity-20 disabled:cursor-not-allowed hover:bg-slate-700 hover:text-white transition-all"
+                  >
+                    Next
+                  </button>
+                </div>
+              )}
             </div>
           ) : (
             /* Empty Search States */
