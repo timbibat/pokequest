@@ -162,13 +162,39 @@ export default function Home() {
   );
 
   return (
+    <>
+      {/* JSON-LD Structured Data for search engines */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            name: "PokéQuest Explorer",
+            description:
+              "Explore all 151 Generation 1 Pokémon with an interactive Pokédex and team-builder. Search, filter, sort, and build synergistic battle parties.",
+            url: "https://pokequest-explorer.vercel.app",
+            applicationCategory: "GameApplication",
+            operatingSystem: "All",
+            author: {
+              "@type": "Person",
+              name: "Timothy Irwin Bibat",
+            },
+            offers: {
+              "@type": "Offer",
+              price: "0",
+              priceCurrency: "USD",
+            },
+          }),
+        }}
+      />
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-emerald-500/30 selection:text-emerald-400">
       {/* Visual background lights */}
       <div className="fixed -top-[20%] -left-[10%] w-[50%] h-[50%] bg-emerald-500/10 rounded-full filter blur-[150px] pointer-events-none" />
       <div className="fixed -top-[10%] -right-[10%] w-[45%] h-[45%] bg-blue-500/10 rounded-full filter blur-[150px] pointer-events-none" />
 
       {/* Main layout wrapper */}
-      <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8 flex flex-col gap-8 relative z-10">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8 flex flex-col gap-8 relative z-10">
         
         {/* Sleek dashboard header */}
         <header className="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-white/5 pb-6">
@@ -383,7 +409,15 @@ export default function Home() {
           )}
         </section>
 
-      </div>
+      </main>
+
+      {/* Semantic footer with author credits */}
+      <footer className="max-w-7xl w-full mx-auto px-4 sm:px-6 pb-28 pt-6 relative z-10 border-t border-white/5">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-[10px] text-slate-500">
+          <p>© {new Date().getFullYear()} PokéQuest Explorer. Pokémon data from <a href="https://pokeapi.co" target="_blank" rel="noopener noreferrer" className="text-emerald-400/70 hover:text-emerald-400 transition-colors">PokéAPI</a>.</p>
+          <p>Created by <span className="text-slate-400">Timothy Irwin Bibat</span></p>
+        </div>
+      </footer>
 
       {/* Floating sliding pokemon details drawer overlay */}
       <PokemonDetailDrawer
@@ -412,5 +446,6 @@ export default function Home() {
         </div>
       )}
     </div>
+    </>
   );
 }
