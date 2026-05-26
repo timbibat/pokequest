@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${outfit.variable} ${jetbrainsMono.variable} h-full`} suppressHydrationWarning>
-      <body className="h-full antialiased font-sans bg-slate-950 text-slate-100">
+      <body className="h-full antialiased font-sans bg-slate-950 text-slate-100" suppressHydrationWarning>
         {children}
       </body>
     </html>
