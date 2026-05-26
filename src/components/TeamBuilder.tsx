@@ -148,10 +148,10 @@ export default function TeamBuilder({
       {/* Floating Toggle Bar */}
       <div
         onClick={() => setIsOpen(!isOpen)}
-        className="mx-auto max-w-5xl glass-panel px-6 py-3.5 rounded-t-2xl border-t border-x border-white/10 flex items-center justify-between cursor-pointer shadow-[0_-8px_30px_rgba(0,0,0,0.4)] select-none hover:bg-slate-900/60 transition-colors"
+        className="mx-3 sm:mx-auto max-w-5xl glass-panel px-4 sm:px-6 py-3.5 rounded-t-2xl border-t border-x border-white/10 flex items-center justify-between gap-3 cursor-pointer shadow-[0_-8px_30px_rgba(0,0,0,0.4)] select-none hover:bg-slate-900/60 transition-colors"
       >
-        <div className="flex items-center gap-3.5">
-          <div className="relative flex items-center justify-center">
+        <div className="flex min-w-0 items-center gap-3 sm:gap-3.5">
+          <div className="relative flex shrink-0 items-center justify-center">
             {team.length > 0 && (
               <span className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-emerald-500 text-[9px] font-black text-white animate-pulse">
                 {team.length}
@@ -159,7 +159,7 @@ export default function TeamBuilder({
             )}
             <span className="text-lg">🛡️</span>
           </div>
-          <span className="text-sm font-bold text-slate-100 tracking-wide">
+          <span className="truncate text-sm font-bold text-slate-100 tracking-wide">
             My Battle Team <span className="text-slate-400 font-medium">({team.length}/6)</span>
           </span>
           {team.length > 0 && (
@@ -169,7 +169,7 @@ export default function TeamBuilder({
           )}
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex shrink-0 items-center gap-4">
           {team.length > 0 && !isOpen && (
             <div className="hidden sm:flex items-center gap-3.5 text-xs text-slate-300 font-mono">
               <span>Avg Rating: <strong className="text-emerald-400">{totalPower}</strong></span>
@@ -190,18 +190,18 @@ export default function TeamBuilder({
       </div>
 
       {/* Main Stats Panel Deck */}
-      <div className="bg-slate-950/95 backdrop-blur-xl border-t border-white/10 p-6 shadow-[0_-12px_40px_rgba(0,0,0,0.6)]">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <div className="max-h-[calc(100dvh-52px)] overflow-y-auto bg-slate-950/95 backdrop-blur-xl border-t border-white/10 p-3 sm:p-5 lg:p-6 shadow-[0_-12px_40px_rgba(0,0,0,0.6)] custom-scrollbar">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-6 pb-[env(safe-area-inset-bottom)]">
           
           {/* Grid Slots (6 slots) */}
-          <div className="lg:col-span-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+          <div className="lg:col-span-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5 sm:gap-3">
             {Array.from({ length: 6 }).map((_, index) => {
               const member = team[index];
               return member ? (
                 <div
                   key={member.id}
                   onClick={() => onSelectPokemon(member.id)}
-                  className={`glass-panel border-white/15 relative flex flex-col items-center justify-center gap-2 p-3.5 rounded-xl transition-all duration-200 hover:scale-105 hover:bg-slate-900/50 cursor-pointer min-h-[110px] glow-${member.types[0]}`}
+                  className={`glass-panel border-white/15 relative flex min-h-[96px] sm:min-h-[110px] flex-col items-center justify-center gap-1.5 sm:gap-2 p-2.5 sm:p-3.5 rounded-xl transition-all duration-200 hover:scale-[1.02] sm:hover:scale-105 hover:bg-slate-900/50 cursor-pointer glow-${member.types[0]}`}
                 >
                   {/* Remove Button */}
                   <button
@@ -221,7 +221,7 @@ export default function TeamBuilder({
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="w-18 h-18 sm:w-20 sm:h-20 object-contain drop-shadow-[0_4px_6px_rgba(0,0,0,0.5)] transform hover:scale-110 transition-transform duration-200"
+                    className="w-14 h-14 sm:w-20 sm:h-20 object-contain drop-shadow-[0_4px_6px_rgba(0,0,0,0.5)] transform hover:scale-110 transition-transform duration-200"
                   />
 
                   {/* Info card */}
@@ -229,7 +229,7 @@ export default function TeamBuilder({
                     <span className="block text-[11px] font-bold text-slate-100 truncate capitalize">
                       {member.name}
                     </span>
-                    <span className="text-[8px] font-extrabold uppercase text-slate-400 tracking-wider">
+                    <span className="block truncate text-[8px] font-extrabold uppercase text-slate-400 tracking-wider">
                       {member.types.join(" · ")}
                     </span>
                   </div>
@@ -237,7 +237,7 @@ export default function TeamBuilder({
               ) : (
                 <div
                   key={index}
-                  className="border border-dashed border-slate-700/60 bg-slate-900/20 rounded-xl flex flex-col items-center justify-center p-3.5 min-h-[110px]"
+                  className="border border-dashed border-slate-700/60 bg-slate-900/20 rounded-xl flex min-h-[96px] sm:min-h-[110px] flex-col items-center justify-center p-2.5 sm:p-3.5"
                 >
                   {/* Glowing Pokéball silhouette */}
                   <div className="w-8 h-8 opacity-20 border-2 border-slate-600 rounded-full relative flex items-center justify-center">
@@ -253,7 +253,7 @@ export default function TeamBuilder({
           </div>
 
           {/* Analysis Dashboard (Right side) */}
-          <div className="bg-slate-900/50 rounded-xl p-4 border border-white/5 flex flex-col justify-between space-y-4">
+          <div className="bg-slate-900/50 rounded-xl p-3 sm:p-4 border border-white/5 flex flex-col justify-between space-y-4">
             
             {/* Stat meters */}
             <div className="space-y-2.5">

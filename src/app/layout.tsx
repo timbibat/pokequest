@@ -14,7 +14,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://pokequest-explorer.vercel.app"),
+  metadataBase: new URL("https://pokequest-self.vercel.app"),
   title: {
     default: "PokéQuest Explorer - Next-Gen Pokédex & Battle Party Deck",
     template: "%s | PokéQuest Explorer",
